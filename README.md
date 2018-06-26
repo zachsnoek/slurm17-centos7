@@ -3,7 +3,7 @@ Installation for the Slurm job scheduler on a CentOS 7 cluster.</br>
 
 ## Prerequisites
 * [btools](https://github.com/zachsnoek/btools) is installed
-* `UID_MIN` in `/etc/login.def` is </br>
+* `SYS_UID_MIN` in `/etc/login.defs` is < 980</br>
 
 ## Conventions
 * The head node is identified as `node01`
@@ -39,12 +39,12 @@ Installation for the Slurm job scheduler on a CentOS 7 cluster.</br>
 
 7. Click `submit` at the bottom of the page to generate the configuration file</br></br>
 
-8. Copy the configuratiion file to the head node and move the file to `/etc/slurm/slurm.conf`</br></br>
+8. Copy the configuration file to the head node and save the file to `/etc/slurm/slurm.conf`</br></br>
 
 9. Copy the configuration file to all of the compute nodes</br></br>
 `$ bpush /etc/slurm/slurm.conf /etc/slurm/slurm.conf`</br></br>
 
-10. Move the cgroup configuration file to `/etc/slurm/cgroup.conf`</br></br>
+10. Move the cgroup configuration file to `/etc/slurm/cgroup.conf` (overwrite the existing file created with the install script)</br></br>
 `$ mv files/cgroup.conf /etc/slurm/cgroup.conf`</br></br>
 
 11. Copy the cgroup configuration file to all of the compute nodes</br></br>
@@ -62,15 +62,15 @@ Installation for the Slurm job scheduler on a CentOS 7 cluster.</br>
 `$ systemctl enable slurmctld`</br>
 `$ systemctl start slurmctld`</br></br>
 
-15. Enable and start the slurmd service on all of the compute nodes</br></br>
-`$ bexec systemctl enable slurmd`</br>
-`$ bexec systemctl start slurmd`</br></br>
+15. On all of the compute nodes, enable and start the slurmd service</br></br>
+`$ systemctl enable slurmd`</br>
+`$ systemctl start slurmd`</br></br>
 
 ## Testing
-Check the Slurm controller configuration on the head node</br></br>
-`$ slurmctld -C`</br></br>
+Check the Slurm configuration on the head node</br></br>
+`$ slurmd -C`</br></br>
 
-Check the Slurm daemon configuration on all of the compute nodes</br></br>
+Check the Slurm configuration on all of the compute nodes</br></br>
 `$ slurmd -C`</br></br>
 
 Confirm that all of the compute nodes are reporting to the head node</br></br>

@@ -2,7 +2,7 @@
 Installation for the Slurm job scheduler on a CentOS 7 cluster.</br>
 
 ## Prerequisites
-* [btools](https://github.com/zachsnoek/btools) is installed
+* [btools](https://github.com/zachsnoek/btools)
 * `SYS_UID_MIN` in `/etc/login.defs` is < 980</br>
 
 ## Conventions

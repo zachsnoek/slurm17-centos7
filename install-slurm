@@ -4,12 +4,14 @@ export VER=17.11.7
 
 # Create global user accounts on all of the nodes in the cluster. These must be created identically on all of the nodes and
 # done prior to installing the RPMs
-export MUNGEUSER=981
-groupadd -g $MUNGEUSER munge
-useradd  -m -c "MUNGE authentication service" -d /var/lib/munge -u $MUNGEUSER -g munge  -s /sbin/nologin munge
-export SLURMUSER=982
-groupadd -g $SLURMUSER slurm
-useradd  -m -c "Slurm workload manager" -d /var/lib/slurm -u $SLURMUSER -g slurm  -s /bin/bash slurm
+groupadd -K GID_MIN=500 -K GID_MAX=999 munge
+MUNGEUSER=$(id -u munge)
+useradd -K UID_MIN=500 -K UID_MAX=999 -m -c "MUNGE authentication service" -d /var/lib/munge -g munge  -s /sbin/nologin munge
+
+groupadd -K GID_MIN=500 -K GID_MAX=999 slurm
+SLURMUSER=$(id -u slurm)
+useradd -K UID_MIN=500 -K UID_MAX=999 -m -c "Slurm workload manager" -d /var/lib/slurm  -g slurm  -s /bin/bash slurm
+
 # In case Slurm already exists but with the wrong ids:
 usermod -o -u $SLURMUSER slurm
 groupmod -o -g $SLURMUSER slurm

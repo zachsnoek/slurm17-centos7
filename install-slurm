@@ -1,16 +1,22 @@
 #!/bin/bash
 
+# GID/UIDs for Munge and Slurm users must be the same on every node; verify that these are available or change as necessary 
+export MUNGEGID=500 
+export MUNGEUID=500
+export SLURMGID=501
+export SLURMUID=501
+
 export DEST=/root   # The location of the directory to build Slurm RPMs. Change if non-root user
 export VER=17.11.7
 
 # Create global user accounts on all of the nodes in the cluster. These must be created identically on all of the nodes and
 # done prior to installing the RPMs
-groupadd -K GID_MIN=500 -K GID_MAX=999 munge
-useradd -K UID_MIN=500 -K UID_MAX=999 -m -c "MUNGE authentication service" -d /var/lib/munge -g munge  -s /sbin/nologin munge
+groupadd -g $MUNGEGID munge
+useradd -u $MUNGEUID -m -c "MUNGE authentication service" -d /var/lib/munge -g munge  -s /sbin/nologin munge
 MUNGEUSER=$(id -u munge)
 
-groupadd -K GID_MIN=500 -K GID_MAX=999 slurm
-useradd -K UID_MIN=500 -K UID_MAX=999 -m -c "Slurm workload manager" -d /var/lib/slurm  -g slurm  -s /bin/bash slurm
+groupadd -g $SLURMGID slurm
+useradd -u $SLURMUID -m -c "Slurm workload manager" -d /var/lib/slurm  -g slurm  -s /bin/bash slurm
 SLURMUSER=$(id -u slurm)
 
 # In case Slurm already exists but with the wrong ids:

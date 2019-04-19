@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export DEST=/root   # The location of the directory to build Slurm RPMs. Change if non-root user
 export VER=17.11.7
 
 # Create global user accounts on all of the nodes in the cluster. These must be created identically on all of the nodes and
@@ -33,8 +34,8 @@ yum install	-y libibmad libibumad perl-Switch perl-ExtUtils-MakeMaker
 yum install -y mariadb-server mariadb-devel
 
 # Download the Slurm 17.11.7 tarball
-mv files/slurm-$VER.tar.bz2 /root
-cd /root
+mv files/slurm-$VER.tar.bz2 $DEST
+cd $DEST
 #wget https://download.schedmd.com/slurm/slurm-17.11.7.tar.bz2
 
 # Build the RPMs
@@ -42,7 +43,7 @@ rpmbuild -ta slurm-$VER.tar.bz2
 
 # Install the RPMs on all of the nodes; RPMs on each node can vary by configuration, but
 # this is my starting point
-cd $HOME/rpmbuild/RPMS/x86_64
+cd $DEST/rpmbuild/RPMS/x86_64
 export VER=17.11.7-1
 
 yum install -y slurm-$VER.el7.x86_64.rpm

@@ -23,9 +23,6 @@ SLURMUSER=$(id -u slurm)
 sudo usermod -o -u $SLURMUSER slurm
 sudo groupmod -o -g $SLURMUSER slurm
 
-# Update the new users and groups across all of the nodes
-sudo bsync
-
 # Install epel-release on all of the nodes
 sudo yum install -y epel-release
 

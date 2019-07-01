@@ -6,7 +6,7 @@ export MUNGEUID=500
 export SLURMGID=501
 export SLURMUID=501
 
-export DEST=/admin   # The location of the directory to build Slurm RPMs
+export DEST=/root   # The location of the directory to build Slurm RPMs
 export VER=17.11.7
 
 # Create global user accounts on all of the nodes in the cluster. These must be created identically on all of the nodes and

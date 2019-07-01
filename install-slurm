@@ -40,7 +40,7 @@ sudo yum install	-y libibmad libibumad perl-Switch perl-ExtUtils-MakeMaker
 sudo yum install -y mariadb-server mariadb-devel
 
 # Download the Slurm 17.11.7 tarball
-mv files/slurm-$VER.tar.bz2 $DEST
+cp files/slurm-$VER.tar.bz2 $DEST
 cd $DEST
 #wget https://download.schedmd.com/slurm/slurm-17.11.7.tar.bz2
 

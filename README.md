@@ -3,13 +3,14 @@ Installation for the Slurm job scheduler on a CentOS 7 cluster.</br>
 
 ## Prerequisites
 * [btools](https://github.com/zachsnoek/btools)
-* `SYS_UID_MIN` in `/etc/login.defs` is < 980</br>
 
 ## Conventions
-* The head node is identified as `node01`
-* The compute nodes are identified as `node02` and `node03`</br>
+* The head node is identified as `headnode`
+* The compute nodes are identified as `node01`, `node02`, and `node03`</br>
 
 ## Installation
+0. On each node, confirm the Slurm and Munge UIDs and GIDs set in `install-slurm`. They must be the same on all of the nodes; modify the values if they are not available.</br></br>
+
 1. On each node, run the installation script (this takes 20-30 minutes to complete)</br></br>
 `$ ./install-slurm`</br></br>    
 
@@ -30,8 +31,8 @@ Installation for the Slurm job scheduler on a CentOS 7 cluster.</br>
 `$ bexec systemctl start munge`</br></br>
 
 6. From any computer, complete the Slurm configuration file [generator](https://slurm.schedmd.com/configurator.easy.html); edit the fields according to the values below (fields not addressed below should be left as their default value or empty if there is no default value)</br>
-     - ControlMachine: `node01`
-     - NodeNames: `node[02-03]`
+     - ControlMachine: `headnode`
+     - NodeNames: `node[01-03]`
      - CPUs, Sockets, CoresPerSocket, and ThreadsPerCore: Values can be found by listing the CPU information on your machine with the `lscpu` command</br>
      - StateSaveLocation: `/var/spool/slurm`
      - SlurmctldLogFile: `/var/log/slurm/slurmctld.log`
@@ -67,8 +68,8 @@ Installation for the Slurm job scheduler on a CentOS 7 cluster.</br>
 `$ systemctl start slurmd`</br></br>
 
 ## Testing
-Check the Slurm configuration on the head node</br></br>
-`$ slurmd -C`</br></br>
+Run the tests in `slurm-centos7/tests`</br></br>
+`$ sbatch <file>`</br></br>
 
 Check the Slurm configuration on all of the compute nodes</br></br>
 `$ slurmd -C`</br></br>

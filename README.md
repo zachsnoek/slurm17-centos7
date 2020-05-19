@@ -1,6 +1,8 @@
 # slurm-centos7
 Installation for the Slurm job scheduler on a CentOS 7 cluster.</br>
 
+:warning: This repository is no longer being updated. For a more updated version of the installation, see [this repository](https://github.com/hopehpc/slurm17-centos7). :warning:
+
 ## Prerequisites
 * [btools](https://github.com/zachsnoek/btools)
 
